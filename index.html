@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+
 <meta charset="UTF-8">
 
 <meta
@@ -29,6 +30,7 @@
   body {
     margin: 0;
     padding: 0;
+
     width: 100%;
     min-height: 100%;
   }
@@ -197,7 +199,7 @@
 
 
   /* =========================================================
-     ANIMAZIONE PULSANTE
+     PULSE
      ========================================================= */
 
   @keyframes respiro {
@@ -291,13 +293,15 @@
 
   .pulsante-regalo:disabled {
     cursor: default;
+
     opacity: 0.78;
+
     animation: none;
   }
 
 
   /* =========================================================
-     ICONA DOWNLOAD
+     ICONA
      ========================================================= */
 
   .icona-download {
@@ -353,7 +357,7 @@
 
 
   /* =========================================================
-     SEPARATORE
+     TORNA ALLA HOME
      ========================================================= */
 
   .separatore {
@@ -364,11 +368,6 @@
 
     background: #e3e9e5;
   }
-
-
-  /* =========================================================
-     TORNA ALLA LANDING
-     ========================================================= */
 
   .pulsante-indietro {
     display: inline-flex;
@@ -397,12 +396,13 @@
 
   .pulsante-indietro:hover {
     color: #315a3e;
+
     background: #f2f6f3;
   }
 
 
   /* =========================================================
-     RESPONSIVE
+     MOBILE
      ========================================================= */
 
   @media (max-width: 420px) {
@@ -469,7 +469,7 @@
 
 
     <!-- =====================================================
-         TESTO
+         TESTI
          ===================================================== -->
 
     <h1>
@@ -507,7 +507,7 @@
 
 
     <!-- =====================================================
-         PULSANTE PRINCIPALE
+         PULSANTE
          ===================================================== -->
 
     <button
@@ -523,9 +523,11 @@
         focusable="false"
         xmlns="http://www.w3.org/2000/svg"
       >
+
         <path
           d="M5 20h14v-2H5v2zm14-9h-4V3H9v8H5l7 7 7-7z"
         />
+
       </svg>
 
       <span>
@@ -543,7 +545,7 @@
 
 
     <!-- =====================================================
-         NOTA IPHONE
+         NOTA
          ===================================================== -->
 
     <div class="nota">
@@ -556,13 +558,13 @@
         Quando hai finito, torna al browser:
       </strong>
 
-      ritroverai automaticamente la pagina WILDU.
+      ritroverai automaticamente la home WILDU.
 
     </div>
 
 
     <!-- =====================================================
-         TORNA SUBITO
+         RITORNO MANUALE
          ===================================================== -->
 
     <div class="separatore"></div>
@@ -570,9 +572,9 @@
 
     <a
       class="pulsante-indietro"
-      href="https://sites.google.com/view/trekking-eventi-gratis/benvenuto"
+      href="https://sites.google.com/view/trekking-eventi-gratis/home"
     >
-      ← Torna alla pagina WILDU
+      ← Torna alla home WILDU
     </a>
 
 
@@ -597,7 +599,7 @@
 
 
   const PAGINA_RITORNO =
-    "https://sites.google.com/view/trekking-eventi-gratis/benvenuto";
+    "https://sites.google.com/view/trekking-eventi-gratis/home";
 
 
   /* =========================================================
@@ -605,7 +607,7 @@
      ========================================================= */
 
   const STORAGE_KEY =
-    "wildu_regalo_orientamento_v1";
+    "wildu_regalo_orientamento_v2";
 
 
   const DURATA_MARKER_MS =
@@ -628,7 +630,7 @@
 
 
   /* =========================================================
-     RILEVAMENTO MOBILE / TABLET
+     MOBILE / TABLET
      ========================================================= */
 
   function dispositivoMobileOTablet() {
@@ -647,8 +649,7 @@
 
 
     /*
-     * iPadOS moderno può identificarsi
-     * come Macintosh.
+     * iPadOS moderno può identificarsi come Mac.
      */
 
     if (
@@ -682,8 +683,8 @@
     } catch (errore) {
 
       /*
-       * Nessun blocco:
-       * Drive deve comunque aprirsi.
+       * Drive deve comunque aprirsi
+       * anche se lo storage non è disponibile.
        */
 
     }
@@ -750,7 +751,7 @@
 
     } catch (errore) {
 
-      /* niente */
+      /* Nessuna azione necessaria. */
 
     }
 
@@ -758,10 +759,10 @@
 
 
   /* =========================================================
-     RITORNO ALLA LANDING
+     RITORNO ALLA HOME
      ========================================================= */
 
-  function tornaAllaLanding() {
+  function tornaAllaHome() {
 
     if (redirectEseguito) {
 
@@ -775,6 +776,16 @@
 
     cancellaMarker();
 
+
+    /*
+     * IMPORTANTE:
+     *
+     * destinazione finale del bridge gift:
+     *
+     * /home
+     *
+     * NON /benvenuto.
+     */
 
     window.location.replace(
       PAGINA_RITORNO
@@ -802,17 +813,10 @@
 
 
     /*
-     * IMPORTANTE:
+     * Su mobile niente _blank e niente window.open.
      *
-     * niente window.open()
-     * niente _blank
-     *
-     * Su iPhone/iPad lasciamo che iOS decida se:
-     *
-     * - aprire Google Drive
-     * - aprire il PDF nel browser
-     *
-     * Il bridge resta predisposto al ritorno.
+     * In questo modo evitiamo la gestione fragile
+     * delle schede esterne su iPhone/iPad.
      */
 
     window.location.assign(
@@ -829,11 +833,8 @@
   function aperturaDesktop() {
 
     /*
-     * Su desktop possiamo aprire Drive
-     * in una scheda separata.
-     *
      * L'apertura avviene direttamente
-     * dal click dell'utente.
+     * dal gesto dell'utente.
      */
 
     const schedaDrive =
@@ -851,17 +852,17 @@
 
       } catch (errore) {
 
-        /* niente */
+        /* Nessuna azione necessaria. */
 
       }
 
 
       stato.textContent =
-        "Regalo aperto. Ritorno alla pagina WILDU…";
+        "Regalo aperto. Ritorno alla home WILDU…";
 
 
       window.setTimeout(
-        tornaAllaLanding,
+        tornaAllaHome,
         180
       );
 
@@ -882,7 +883,7 @@
 
 
   /* =========================================================
-     CLICK
+     CLICK PRINCIPALE
      ========================================================= */
 
   pulsante.addEventListener(
@@ -917,28 +918,12 @@
 
 
   /* =========================================================
-     USCITA VERSO DRIVE / APP
+     RITORNO DALL'APP DRIVE
      ========================================================= */
 
   document.addEventListener(
     "visibilitychange",
     function () {
-
-      /*
-       * Caso tipico iPhone:
-       *
-       * Bridge
-       *   ↓
-       * Drive app
-       *   ↓
-       * pagina hidden
-       *   ↓
-       * utente torna a Safari
-       *   ↓
-       * pagina visible
-       *   ↓
-       * landing WILDU
-       */
 
       if (
         document.visibilityState === "hidden"
@@ -965,7 +950,7 @@
         leggiMarker()
       ) {
 
-        tornaAllaLanding();
+        tornaAllaHome();
 
       }
 
@@ -974,7 +959,7 @@
 
 
   /* =========================================================
-     SAFARI / BFCache
+     SAFARI / BFCACHE
      ========================================================= */
 
   window.addEventListener(
@@ -982,15 +967,9 @@
     function (evento) {
 
       /*
-       * Caso:
-       *
-       * Drive si è aperto nella stessa scheda
-       * invece dell'app.
-       *
-       * L'utente preme "indietro".
-       *
-       * Safari può ripristinare questo bridge
-       * tramite Back/Forward Cache.
+       * Se l'utente torna indietro da Drive web
+       * e Safari ripristina la pagina dalla cache,
+       * lo riportiamo alla HOME.
        */
 
       if (
@@ -998,7 +977,7 @@
         leggiMarker()
       ) {
 
-        tornaAllaLanding();
+        tornaAllaHome();
 
       }
 
@@ -1019,7 +998,7 @@
         leggiMarker()
       ) {
 
-        tornaAllaLanding();
+        tornaAllaHome();
 
       }
 
@@ -1028,7 +1007,7 @@
 
 
   /* =========================================================
-     RITORNO MANUALE DA DRIVE WEB
+     RIPRISTINO DOPO BACK / RELOAD
      ========================================================= */
 
   const markerEsistente =
@@ -1042,12 +1021,11 @@
 
 
     /*
-     * Se Safari ricostruisce completamente
-     * la pagina dopo il tasto indietro,
-     * non abbiamo più la variabile JS originale.
+     * Se la pagina viene ricostruita dopo essere tornati
+     * da Drive, il marker sopravvive nella sessione.
      *
-     * Il marker ci permette comunque
-     * di capire che l'utente proviene da Drive.
+     * Aspettiamo almeno 1 secondo per non intercettare
+     * il click iniziale.
      */
 
     if (etaMarker > 1000) {
@@ -1060,7 +1038,7 @@
             leggiMarker()
           ) {
 
-            tornaAllaLanding();
+            tornaAllaHome();
 
           }
 
